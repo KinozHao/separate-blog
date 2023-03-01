@@ -9,7 +9,7 @@ import com.kinoz.domain.pojo.Category;
 import com.kinoz.domain.vo.CategoryVo;
 import com.kinoz.service.ArticleService;
 import com.kinoz.service.CategoryService;
-import com.kinoz.mapper.SgCategoryMapper;
+import com.kinoz.mapper.CategoryMapper;
 import com.kinoz.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 * @createDate 2023-02-28 18:51:04
 */
 @Service
-public class CategoryServiceImpl extends ServiceImpl<SgCategoryMapper, Category>
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     implements CategoryService {
     @Autowired
     ArticleService articleService;  //查询文章表时需要使用articleService
