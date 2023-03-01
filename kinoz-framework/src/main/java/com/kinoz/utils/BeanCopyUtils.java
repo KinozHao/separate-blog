@@ -1,7 +1,6 @@
 package com.kinoz.utils;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.kinoz.domain.entity.Article;
+import com.kinoz.domain.pojo.Article;
 import com.kinoz.domain.vo.HotArticleVo;
 import org.springframework.beans.BeanUtils;
 

@@ -1,4 +1,4 @@
-package com.kinoz.domain.entity;
+package com.kinoz.domain.pojo;
 
 import java.io.Serializable;
 import java.util.Date;

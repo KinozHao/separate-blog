@@ -1,6 +1,6 @@
 package com.kinoz.mapper;
 
-import com.kinoz.domain.entity.SgCategory;
+import com.kinoz.domain.pojo.SgCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

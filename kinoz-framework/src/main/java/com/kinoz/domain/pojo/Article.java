@@ -1,4 +1,4 @@
-package com.kinoz.domain.entity;
+package com.kinoz.domain.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

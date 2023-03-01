@@ -1,7 +1,7 @@
 package com.kinoz.service;
 
 import com.kinoz.domain.ResponseResult;
-import com.kinoz.domain.entity.SgCategory;
+import com.kinoz.domain.pojo.SgCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

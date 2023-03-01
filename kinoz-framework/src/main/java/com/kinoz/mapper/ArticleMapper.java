@@ -1,7 +1,7 @@
 package com.kinoz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kinoz.domain.entity.Article;
+import com.kinoz.domain.pojo.Article;
 
 /**
  * @author kinoz
