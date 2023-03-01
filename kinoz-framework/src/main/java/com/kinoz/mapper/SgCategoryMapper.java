@@ -1,6 +1,6 @@
 package com.kinoz.mapper;
 
-import com.kinoz.domain.pojo.SgCategory;
+import com.kinoz.domain.pojo.Category;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2023-02-28 18:51:04
 * @Entity com.kinoz.domain.entity.SgCategory
 */
-public interface SgCategoryMapper extends BaseMapper<SgCategory> {
+public interface SgCategoryMapper extends BaseMapper<Category> {
 
 }
 

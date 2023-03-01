@@ -17,6 +17,6 @@ import java.util.List;
 @Data
 @ToString
 public class PageVo {
-    private List row;
+    private List rows;
     private Long total;
 }

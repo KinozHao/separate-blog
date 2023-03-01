@@ -1,9 +1,8 @@
 package com.kinoz.controller;
 
 import com.kinoz.domain.ResponseResult;
-import com.kinoz.service.SgCategoryService;
+import com.kinoz.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class CategoryController {
     @Autowired
-    SgCategoryService categoryService;
+    CategoryService categoryService;
 
     @GetMapping("/getCategoryList")
     public ResponseResult getCategoryList(){

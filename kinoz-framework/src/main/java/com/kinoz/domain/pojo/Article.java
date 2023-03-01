@@ -1,10 +1,12 @@
 package com.kinoz.domain.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
@@ -18,6 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sg_article")
+@Accessors(chain = true)
 public class Article {
     @TableId
     private Long id;
@@ -31,6 +34,9 @@ public class Article {
     private String summary;
     //所属分类id
     private Long categoryId;
+    //代表此字段在数据表中不存在
+    @TableField(exist = false)
+    private String categoryName;
     //缩略图
     private String thumbnail;
     //是否置顶（0否，1是）

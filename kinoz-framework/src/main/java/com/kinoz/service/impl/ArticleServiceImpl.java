@@ -6,16 +6,22 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.pojo.Article;
+import com.kinoz.domain.pojo.Category;
 import com.kinoz.domain.vo.ArticleListVo;
 import com.kinoz.domain.vo.HotArticleVo;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.mapper.ArticleMapper;
 import com.kinoz.service.ArticleService;
+import com.kinoz.service.CategoryService;
 import com.kinoz.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author kinoz
@@ -24,6 +30,8 @@ import java.util.Objects;
  */
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> implements ArticleService {
+    @Resource
+    CategoryService categoryService;
 
     /**
      * 查询热门文章 封装为ResponseResult返回
@@ -79,8 +87,43 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         Page<Article> page = new Page<>(pageNum,pageSize);
         page(page,query);
 
-        //分装查询结构
+
+        //查询categoryName
+        //方式1 使用foreach
+        /*List<Article> articles = page.getRecords();
+        for (Article article : articles) {
+            //articleId去查询articleName进行设置
+            //1.根据categoryId查询categoryName
+            Category category = categoryService.getById(article.getCategoryId());
+            //2.再把categoryName赋给文章
+            article.setCategoryName(category.getName());
+        }*/
+        //方式2 使用stream流 匿名内部类 方便理解
+        /*List<Article> articles = page.getRecords();
+        articles.stream()
+                .map(new Function<Article, Article>() {
+                    @Override
+                    public Article apply(Article article) {
+                        //获取分类id 查询分类信息 获取分类名称
+                        Long id = article.getCategoryId();
+                        Category category = categoryService.getById(id);
+                        String categoryName = category.getName();
+                        article.setCategoryName(categoryName);
+                        return article;
+                    }
+                });*/
+        //方式3 使用stream流 λ 减少冗余
+        List<Article> articles = page.getRecords();
+        articles = articles.stream()
+                .map(article -> article.setCategoryName(categoryService.getById(article.getCategoryId()).getName()))
+                .collect(Collectors.toList());
+
+
+        //封装查询结构
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(page.getRecords(), ArticleListVo.class);
+
+
+
         //前端需要的数据外层的两个参数row和total
         //row就是我们获取到的articleListVos的所有参数,total通过page.gotTotal获取所有的页数
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());

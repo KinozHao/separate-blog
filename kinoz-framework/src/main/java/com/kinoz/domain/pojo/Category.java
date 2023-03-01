@@ -18,7 +18,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @TableName("sg_category")
-public class SgCategory implements Serializable {
+public class Category implements Serializable {
     /**
      * 
      */

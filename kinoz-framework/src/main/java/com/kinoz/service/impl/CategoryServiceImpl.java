@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.pojo.Article;
-import com.kinoz.domain.pojo.SgCategory;
+import com.kinoz.domain.pojo.Category;
 import com.kinoz.domain.vo.CategoryVo;
 import com.kinoz.service.ArticleService;
-import com.kinoz.service.SgCategoryService;
+import com.kinoz.service.CategoryService;
 import com.kinoz.mapper.SgCategoryMapper;
 import com.kinoz.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 * @createDate 2023-02-28 18:51:04
 */
 @Service
-public class CategoryServiceImpl extends ServiceImpl<SgCategoryMapper, SgCategory>
-    implements SgCategoryService{
+public class CategoryServiceImpl extends ServiceImpl<SgCategoryMapper, Category>
+    implements CategoryService {
     @Autowired
     ArticleService articleService;  //查询文章表时需要使用articleService
 
@@ -55,10 +55,10 @@ public class CategoryServiceImpl extends ServiceImpl<SgCategoryMapper, SgCategor
 
         //3.查询分类表
         //没有判断状态的数据
-        List<SgCategory> sgCategories = listByIds(categoryIds);
+        List<Category> sgCategories = listByIds(categoryIds);
 
         //判断状态的数据 0为正常 1为异常
-        List<SgCategory> normalCategories = sgCategories.stream()
+        List<Category> normalCategories = sgCategories.stream()
                 .filter(var -> var.getStatus().equals(SystemConstant.CATEGORY_STATUS_NORMAL))
                 .collect(Collectors.toList());
         //封装vo

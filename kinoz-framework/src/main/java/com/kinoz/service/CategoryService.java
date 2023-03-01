@@ -1,7 +1,7 @@
 package com.kinoz.service;
 
 import com.kinoz.domain.ResponseResult;
-import com.kinoz.domain.pojo.SgCategory;
+import com.kinoz.domain.pojo.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【sg_category(分类表)】的数据库操作Service
 * @createDate 2023-02-28 18:51:04
 */
-public interface SgCategoryService extends IService<SgCategory> {
+public interface CategoryService extends IService<Category> {
 
     /**
      * 展示分类列表,用户点击分类看到对应分类下文章
