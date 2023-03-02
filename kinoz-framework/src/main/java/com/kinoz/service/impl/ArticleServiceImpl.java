@@ -7,6 +7,7 @@ import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.pojo.Article;
 import com.kinoz.domain.pojo.Category;
+import com.kinoz.domain.vo.ArticleDetailVo;
 import com.kinoz.domain.vo.ArticleListVo;
 import com.kinoz.domain.vo.HotArticleVo;
 import com.kinoz.domain.vo.PageVo;
@@ -98,6 +99,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
             //2.再把categoryName赋给文章
             article.setCategoryName(category.getName());
         }*/
+
         //方式2 使用stream流 匿名内部类 方便理解
         /*List<Article> articles = page.getRecords();
         articles.stream()
@@ -112,16 +114,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
                         return article;
                     }
                 });*/
+
         //方式3 使用stream流 λ 减少冗余
         List<Article> articles = page.getRecords();
         articles = articles.stream()
                 .map(article -> article.setCategoryName(categoryService.getById(article.getCategoryId()).getName()))
                 .collect(Collectors.toList());
 
-
         //封装查询结构
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(page.getRecords(), ArticleListVo.class);
-
 
 
         //前端需要的数据外层的两个参数row和total
@@ -129,4 +130,30 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());
         return ResponseResult.okResult(pageVo);
     }
+
+    /**
+     * 要求在文章列表点击阅读全文时能够跳转到文章详情页面，可以让用户阅读文章正文。
+     * 要求：①要在文章详情中展示其分类名
+     */
+    @Override
+    public ResponseResult getArticleDetail(Long id) {
+        //根据id查询文章
+        Article article = getById(id);
+        //转换vo
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        //根据分类id查询分类名
+        //获取分类id
+        Long categoryId = articleDetailVo.getCategoryId();
+        //根据分类id获取分类(分类是在category表查的,所有使用了自动注入的category接口)
+        Category category = categoryService.getById(categoryId);
+        if (category != null){
+            articleDetailVo.setCategoryName(category.getName());
+        }
+
+        //封装响应返回
+        return ResponseResult.okResult(articleDetailVo);
+    }
+
+
+
 }
