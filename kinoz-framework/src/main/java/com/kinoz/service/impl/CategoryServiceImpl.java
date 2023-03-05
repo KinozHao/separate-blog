@@ -29,9 +29,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     @Autowired
     ArticleService articleService;  //查询文章表时需要使用articleService
 
+    /**
+     *  页面上需要展示分类列表，用户可以点击具体的分类查看该分类下的文章列表。
+     *  注意： ①要求只展示有发布正式文章的分类 ②必须是正常状态的分类
+     * @return
+     */
     @Override
     public ResponseResult getCategoryList() {
-        //1.查询文章表 且条件为已经发布的文章
         LambdaQueryWrapper<Article> articleWrapper = new LambdaQueryWrapper<>();
         articleWrapper.eq(Article::getStatus, SystemConstant.ARTICLE_STATUS_NORMAL);
         List<Article> articleList = articleService.list(articleWrapper);
@@ -65,6 +69,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(sgCategories, CategoryVo.class);
         return ResponseResult.okResult(categoryVos);
     }
+
+
 }
 
 

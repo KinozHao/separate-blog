@@ -11,9 +11,12 @@ import com.kinoz.domain.pojo.Article;
  */
 public interface ArticleService extends IService<Article> {
 
+    //热门文章
     ResponseResult hotArticleList();
 
+    //分页查询文章列表
     ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId);
 
+    //文章详情
     ResponseResult getArticleDetail(Long id);
 }

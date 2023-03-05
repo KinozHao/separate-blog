@@ -35,7 +35,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
     CategoryService categoryService;
 
     /**
-     * 查询热门文章 封装为ResponseResult返回
+     *  需要查询浏览量最高的前10篇文章的信息。要求展示文章标题和浏览量。把能让用户自己点击跳转到具体的文章详情进行浏览。
+     *  注意：不能把草稿展示出来，不能把删除了的文章查询出来。要按照浏览量进行降序排序。
      * @return
      */
     @Override
@@ -69,6 +70,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
 
     /**
      * 分页查询文章列表
+     * 在首页和分类页面都需要查询文章列表。
+     * 首页：查询所有的文章
+     * 分类页面：查询对应分类下的文章
+     * 要求：①只能查询正式发布的文章 ②置顶的文章要显示在最前面
      * @return
      */
     @Override
@@ -153,7 +158,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         //封装响应返回
         return ResponseResult.okResult(articleDetailVo);
     }
-
 
 
 }

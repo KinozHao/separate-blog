@@ -11,11 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CategoryService extends IService<Category> {
 
-    /**
-     * 展示分类列表,用户点击分类看到对应分类下文章
-     * 条件
-     * 只展示已发布的文章,必须是正常状态的分类
-     * @return
-     */
+    //分类列表
     ResponseResult getCategoryList();
 }
