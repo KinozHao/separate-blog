@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/article")
-@CrossOrigin    //解决与前端的跨域问题
+//@CrossOrigin    //解决与前端的跨域问题
 public class ArticleController {
     @Autowired
     private ArticleService articleService;

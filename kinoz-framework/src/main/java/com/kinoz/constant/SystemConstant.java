@@ -6,18 +6,25 @@ package com.kinoz.constant;
  * @apiNote
  */
 public class SystemConstant {
+
     /**
-     * 文章是草稿
+     * 文章相关 1草稿 0已发布
      */
     public static final int ARTICLE_STATUS_DRAFT = 1;
-    /**
-     * 文章是正常分布状态
-     */
     public static final int ARTICLE_STATUS_NORMAL = 0;
 
 
     /**
-     * 分类状态是正常的
+     * 分类相关 0正常 1禁用
      */
     public static final String CATEGORY_STATUS_NORMAL = "0";
+    public static final String CATEGORY_STATUS_DISABLE = "1";
+
+    /**
+     * 友联相关
+     * 0审核通过 1审核未通过 2等待审核
+     */
+    public static final String FRIEND_LINK_STATUS_PASS = "0";
+    public static final String FRIEND_LINK_STATUS_NOT_PASS = "1";
+    public static final String FRIEND_LINK_STATUS_WAITING = "2";
 }

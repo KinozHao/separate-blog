@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -151,9 +152,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         Long categoryId = articleDetailVo.getCategoryId();
         //根据分类id获取分类(分类是在category表查的,所有使用了自动注入的category接口)
         Category category = categoryService.getById(categoryId);
-        if (category != null){
+        //使用optional进行封装,避免空指针
+        Optional<Category> cate = Optional.ofNullable(category);
+        cate.ifPresent(value -> articleDetailVo.setCategoryName(value.getName()));
+        /*if (category != null){
             articleDetailVo.setCategoryName(category.getName());
-        }
+        }*/
 
         //封装响应返回
         return ResponseResult.okResult(articleDetailVo);
