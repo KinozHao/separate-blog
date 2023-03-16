@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/link")
-//@CrossOrigin
+@CrossOrigin
 public class LinkController {
     @Resource
     LinkService linkService;
