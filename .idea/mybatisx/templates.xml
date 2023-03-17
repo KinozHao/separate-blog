@@ -7,7 +7,7 @@
           <GenerateConfig>
             <option name="annotationType" value="NONE" />
             <option name="basePackage" value="generator" />
-            <option name="basePath" value="src/main/java/com/kinoz/domian/pojo" />
+            <option name="basePath" value="src/main" />
             <option name="classNameStrategy" value="camel" />
             <option name="encoding" value="UTF-8" />
             <option name="extraClassSuffix" value="" />
@@ -68,8 +68,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="SgLink" />
-                  <option name="tableName" value="sg_link" />
+                  <option name="className" value="SysUser" />
+                  <option name="tableName" value="sys_user" />
                 </TableUIInfo>
               </list>
             </option>
