@@ -33,9 +33,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //获取token
-        //token没有获取成功
-        //解决方案 在postman测试时 token是放在header里面的而不是params里面
+        /**
+        *获取token
+        *Q.友联增加权限后,访问友联,token没有获取成功
+        *F在postman测试时 token是放在header里面的而不是params里面
+        *Q.退出接口获取不到token,postman测试没问题是因为我们手动在请求头中添加了header信息
+        *F.在浏览器中清除前端页面的cache
+         */
         String token = request.getHeader("token");
         if (!StringUtils.hasText(token)) {
             //没有token直接放行
@@ -64,6 +68,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
         //存入securityContestHolder,获取权限信息的封装到authentication中
+        //TODO 后期会频繁调用此属性,需把它封装为Utils
         var authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行

@@ -12,6 +12,7 @@ import com.kinoz.utils.RedisCache;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -57,4 +58,23 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         var vo = new BlogUserLoginVo(jwt, userInfoVo);
         return ResponseResult.okResult(vo);
     }
+
+    /**
+     * 实现用户登录出
+     * 测试时候先把浏览器的缓存给清除了 不然就是报转换异常
+     * java.lang.ClassCastException: class java.lang.String cannot be cast to class com.kinoz.domain.pojo.LoginUser (java.lang.String is in module java.base of loader 'bootstrap'; com.kinoz.domain.pojo.LoginUser is in unnamed module of loader 'app')
+     * @return
+     */
+    @Override
+    public ResponseResult logout() {
+        //获取token从中提取userid
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var loginUser = (LoginUser) authentication.getPrincipal();
+        //取到userid
+        Long userid = loginUser.getUser().getId();
+        //把redis中的userid删除
+        redisCache.deleteObject("bloglogin:"+userid);
+        return ResponseResult.okResult();
+    }
+
 }

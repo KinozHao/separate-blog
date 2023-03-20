@@ -1,5 +1,7 @@
 package com.kinoz.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.kinoz.domain.pojo.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -235,4 +237,5 @@ public class RedisCache
     {
         return redisTemplate.keys(pattern);
     }
+
 }

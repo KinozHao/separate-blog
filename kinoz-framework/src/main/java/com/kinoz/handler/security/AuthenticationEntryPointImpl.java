@@ -23,8 +23,10 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         e.printStackTrace();
+
         //登录出错
         ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
+
         //响应给前端
         WebUtils.renderString(httpServletResponse, JSON.toJSONString(result));
     }

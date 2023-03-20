@@ -27,4 +27,9 @@ public class SystemConstant {
     public static final String FRIEND_LINK_STATUS_PASS = "0";
     public static final String FRIEND_LINK_STATUS_NOT_PASS = "1";
     public static final String FRIEND_LINK_STATUS_WAITING = "2";
+
+    /**
+     * 评论相关
+     */
+    public static final Long COMMENT_ROOT_ID = -1L;
 }
