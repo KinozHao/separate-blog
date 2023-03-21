@@ -90,6 +90,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         });
         return commentVos;
     }
+
+    /**
+     * 添加评论
+     * @param comment
+     * @return
+     */
+    @Override
+    public ResponseResult addComment(Comment comment) {
+        save(comment);
+        return ResponseResult.okResult();
+    }
 }
 
 
