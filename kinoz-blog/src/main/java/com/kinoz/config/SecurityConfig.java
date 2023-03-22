@@ -55,7 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对于登出接空 要求请求头携带token
                 .antMatchers("logout").authenticated()
                 // 对友联接口 必须认证才能查看
-                .antMatchers("/link/getAllLink").authenticated()
+                //.antMatchers("/link/getAllLink").authenticated()
+                //个人信息接口必须登录后才能访问
+                .antMatchers("/user/userInfo").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 

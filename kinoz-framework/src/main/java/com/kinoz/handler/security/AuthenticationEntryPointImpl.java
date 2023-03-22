@@ -25,7 +25,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
         e.printStackTrace();
 
         //登录出错
-        ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
+        ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
 
         //响应给前端
         WebUtils.renderString(httpServletResponse, JSON.toJSONString(result));

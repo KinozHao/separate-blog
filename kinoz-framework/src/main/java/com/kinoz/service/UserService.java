@@ -2,6 +2,7 @@ package com.kinoz.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.pojo.User;
 
 /**
@@ -11,4 +12,5 @@ import com.kinoz.domain.pojo.User;
 */
 public interface UserService extends IService<User> {
 
+    ResponseResult userInfo();
 }

@@ -8,12 +8,15 @@ import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.pojo.Comment;
 import com.kinoz.domain.vo.CommentVo;
 import com.kinoz.domain.vo.PageVo;
+import com.kinoz.enums.AppHttpCodeEnum;
+import com.kinoz.exception.SystemException;
 import com.kinoz.mapper.CommentMapper;
 import com.kinoz.service.CommentService;
 import com.kinoz.service.UserService;
 import com.kinoz.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -29,15 +32,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     UserService userService;
 
     @Override
-    public ResponseResult commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public ResponseResult commentList(String commentType, Long articleId, Integer pageNum, Integer pageSize) {
         //查询对应文章的根评论
         var wrapper = new LambdaQueryWrapper<Comment>();
 
         //对articleId进行判断
-        wrapper.eq(Comment::getArticleId,articleId);
+        wrapper.eq(SystemConstant.ARTICLE_COMMENT.equals(commentType),Comment::getArticleId,articleId);
 
         //根评论 rootid = -1
         wrapper.eq(Comment::getRootId, SystemConstant.COMMENT_ROOT_ID);
+
+        //评论类型
+        wrapper.eq(Comment::getType,commentType);
 
         //分页查询
         Page<Comment> page = new Page(pageNum, pageSize);
@@ -99,6 +105,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Override
     public ResponseResult addComment(Comment comment) {
         save(comment);
+        //评论不能为空
+        if (!StringUtils.hasText(comment.getContent())) {
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
         return ResponseResult.okResult();
     }
 }

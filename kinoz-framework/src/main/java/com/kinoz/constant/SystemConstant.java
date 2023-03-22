@@ -32,4 +32,12 @@ public class SystemConstant {
      * 评论相关
      */
     public static final Long COMMENT_ROOT_ID = -1L;
+    /**
+     * 评论类型:文章
+     */
+    public static final String ARTICLE_COMMENT = "0";
+    /**
+     * 评论类型:友联
+     */
+    public static final String LINK_COMMENT = "1";
 }
