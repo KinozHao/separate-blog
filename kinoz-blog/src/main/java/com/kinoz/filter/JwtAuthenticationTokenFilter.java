@@ -68,7 +68,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
         //存入securityContestHolder,获取权限信息的封装到authentication中
-        //TODO 后期会频繁调用此属性,需把它封装为Utils
         var authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
