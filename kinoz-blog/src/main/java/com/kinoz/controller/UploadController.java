@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 /**
  * @Author Hao Kinoz
- * @Description 采用七牛云的oss
- * @Date 2023/3/22
+ * @Description
+ * @Date 2023/3/25
  **/
 @RestController
 public class UploadController {
-
     @Autowired
     UploadService uploadService;
 
@@ -23,7 +24,3 @@ public class UploadController {
         return uploadService.uploadImg(img);
     }
 }
-
-
-
-

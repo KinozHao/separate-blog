@@ -1,11 +1,13 @@
 package com.kinoz.service.impl;
 
-
-
 import com.google.gson.Gson;
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.enums.AppHttpCodeEnum;
+import com.kinoz.exception.SystemException;
 import com.kinoz.service.UploadService;
 import com.kinoz.service.UserService;
+import com.kinoz.utils.PathUtils;
+import com.kinoz.utils.SecurityUtils;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
@@ -13,50 +15,60 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
-import java.util.UUID;
 
 /**
- * @author coldplay
- * @create 2023-03-08 11:14
- */
-/*TODO 测试时候上传不存在问题,POSTMAN测试返回状态200没问题,但七牛云存储桶并没有接收到图片
-    可能存在延迟问题明天查看七牛云是否接受到图片,若没接收到跳过此接口*/
-@Service
-@Data
-@ConfigurationProperties(prefix = "oss")
-public class UploadServiceImpl implements UploadService {
+ * @author kinoz
+ * @create 2023-03-25 11:14
+ * 上传还是存在问题 一直报500错误 放弃~
+*/
+    @Service
+    public class UploadServiceImpl implements UploadService {
 
-    @Override
+        @Autowired
+        UserService userService;
+
+
+        @Override
     public ResponseResult uploadImg(MultipartFile img) {
+        //判断文件类型
+        //获取原始文件名
+        String originalFilename = img.getOriginalFilename();
+        //对原始文件名进行判断
+        if(!originalFilename.endsWith(".png")){
+            throw new SystemException(AppHttpCodeEnum.FILE_TYPE_ERROR);
+        }
 
-        String url = uploadOss(img);
+        //如果判断通过上传文件到OSS
+        String filePath = PathUtils.generateFilePath(originalFilename);
+        String url = uploadOss(img,filePath);//  2099/2/3/wqeqeqe.png
+
+        //TODO 将头像上传至数据库
+        Long id = SecurityUtils.getUserId();
 
         return ResponseResult.okResult(url);
     }
 
+    @Value("${oss.accessKey}")
     private String accessKey;
+    @Value("${oss.secretKey}")
     private String secretKey;
+    @Value("${oss.bucket}")
     private String bucket;
 
 
-    private String uploadOss(MultipartFile imgFile){
+    private String uploadOss(MultipartFile imgFile, String filePath){
         //构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Region.autoRegion());
         //...其他参数参考类注释
         UploadManager uploadManager = new UploadManager(cfg);
         //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = UUID.randomUUID()+".png";
-
-        /*String accessKey= "Ed4zcmU1BH1xsUD7rpf5qS00fh0VaxQID_KgT8PK";
-        String secretKey= "dqnf1yXBBq1ML1MhT7lMDWwpFidnBjDgOL5quEfn";
-        String bucket= "kinoz-blog";*/
-
+        String key = filePath;
         try {
             InputStream inputStream = imgFile.getInputStream();
             Auth auth = Auth.create(accessKey, secretKey);
@@ -67,7 +79,7 @@ public class UploadServiceImpl implements UploadService {
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
                 System.out.println(putRet.key);
                 System.out.println(putRet.hash);
-                return "nn";
+                return "http://rr6j96d9m.hd-bkt.clouddn.com/"+key;
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());
@@ -82,6 +94,4 @@ public class UploadServiceImpl implements UploadService {
         }
         return "www";
     }
-
 }
-
