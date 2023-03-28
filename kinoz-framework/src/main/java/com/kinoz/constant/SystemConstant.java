@@ -40,4 +40,7 @@ public class SystemConstant {
      * 评论类型:友联
      */
     public static final String LINK_COMMENT = "1";
+
+    //浏览量中redis的KEY
+    public static final String REDIS_VIEW_KEY ="article:viewCount";
 }

@@ -238,4 +238,18 @@ public class RedisCache
         return redisTemplate.keys(pattern);
     }
 
+
+
+
+    /**
+     * 对redis中hash结构的value进行自增操作
+     * @param key redis键
+     * @param hKey hash键
+     * @param v
+     */
+    public void incrementCacheMapValue(String key,String hKey,int v){
+        redisTemplate.opsForHash().increment(key,hKey,v);
+
+    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @MapperScan("com.kinoz.mapper")
+//开启定时任务功能
 @EnableScheduling
 public class blogStart {
     public static void main(String[] args) {

@@ -15,6 +15,7 @@ import com.kinoz.mapper.ArticleMapper;
 import com.kinoz.service.ArticleService;
 import com.kinoz.service.CategoryService;
 import com.kinoz.utils.BeanCopyUtils;
+import com.kinoz.utils.RedisCache;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,6 +35,8 @@ import java.util.stream.Stream;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> implements ArticleService {
     @Resource
     CategoryService categoryService;
+    @Resource
+    RedisCache redisCache;
 
     /**
      *  需要查询浏览量最高的前10篇文章的信息。要求展示文章标题和浏览量。把能让用户自己点击跳转到具体的文章详情进行浏览。
@@ -145,6 +148,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
     public ResponseResult getArticleDetail(Long id) {
         //根据id查询文章
         Article article = getById(id);
+        Integer viewCount = redisCache.getCacheMapValue(SystemConstant.REDIS_VIEW_KEY, id.toString());
+        article.setViewCount(viewCount.longValue());
         //转换vo
         ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
         //根据分类id查询分类名
@@ -161,6 +166,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
 
         //封装响应返回
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    @Override
+    public ResponseResult updateViewCount(Long id) {
+        //更新redis中对应id的浏览量
+        redisCache.incrementCacheMapValue(SystemConstant.REDIS_VIEW_KEY,id.toString(),1);
+        return null;
     }
 
 
