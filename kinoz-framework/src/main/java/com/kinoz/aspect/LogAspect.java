@@ -46,8 +46,6 @@ public class LogAspect {
 
     }
 
-
-
     private void handleBefore(ProceedingJoinPoint joinPoint) {
         var sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = sra.getRequest();
