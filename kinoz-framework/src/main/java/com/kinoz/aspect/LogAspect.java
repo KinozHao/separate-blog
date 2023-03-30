@@ -48,6 +48,7 @@ public class LogAspect {
 
     private void handleBefore(ProceedingJoinPoint joinPoint) {
         var sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //may produce 'NullPointerException'
         HttpServletRequest request = sra.getRequest();
 
         //获取被增强方法上的注解对象
