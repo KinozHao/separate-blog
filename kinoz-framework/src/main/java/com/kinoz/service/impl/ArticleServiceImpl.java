@@ -148,6 +148,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
     public ResponseResult getArticleDetail(Long id) {
         //根据id查询文章
         Article article = getById(id);
+        //从redis中获取实时浏览量
         Integer viewCount = redisCache.getCacheMapValue(SystemConstant.REDIS_VIEW_KEY, id.toString());
         article.setViewCount(viewCount.longValue());
         //转换vo
