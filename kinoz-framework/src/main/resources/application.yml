@@ -1,4 +1,4 @@
 oss:
-  accessKey: null
-  secretKey: null
-  bucket: null
+  accessKey: 123
+  secretKey: 123
+  bucket: 123
