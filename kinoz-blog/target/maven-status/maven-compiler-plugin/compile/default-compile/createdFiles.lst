@@ -1,10 +1,10 @@
 com\kinoz\controller\BlogLoginController.class
-com\kinoz\blogStart.class
 com\kinoz\controller\LinkController.class
 com\kinoz\controller\UploadController.class
 com\kinoz\filter\JwtAuthenticationTokenFilter.class
+com\kinoz\controller\CommentController.class
+com\kinoz\controller\CategoryController.class
+com\kinoz\blogStart.class
 com\kinoz\config\SecurityConfig.class
 com\kinoz\controller\UserController.class
 com\kinoz\controller\ArticleController.class
-com\kinoz\controller\CommentController.class
-com\kinoz\controller\CategoryController.class

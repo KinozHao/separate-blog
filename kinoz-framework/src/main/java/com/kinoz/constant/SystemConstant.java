@@ -43,4 +43,9 @@ public class SystemConstant {
 
     //浏览量中redis的KEY
     public static final String REDIS_VIEW_KEY ="article:viewCount";
+
+    //后台系统权限相关
+    public static final String MENU = "C";
+    public static final String BUTTON = "F";
+    public static final String STATUS_NORMAL = "0";
 }

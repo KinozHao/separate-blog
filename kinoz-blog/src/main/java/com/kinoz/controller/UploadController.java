@@ -1,5 +1,6 @@
 package com.kinoz.controller;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UploadController {
     UploadService uploadService;
 
     @PostMapping("/upload")
-    public ResponseResult uploadImg(MultipartFile img){
+    public ResponseResult uploadImg(@JSONField(serialize = false) MultipartFile img){
         return uploadService.uploadImg(img);
     }
 }

@@ -1,7 +1,12 @@
 package com.kinoz.service;
 
+import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.TagDto;
 import com.kinoz.domain.pojo.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kinoz.domain.vo.PageVo;
+
+import java.util.List;
 
 /**
 * @author Hao
@@ -10,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface TagService extends IService<Tag> {
 
+    ResponseResult<PageVo> list(Integer pageNum, Integer pageSize, TagDto tagListDto);
+
+    void addTag(TagDto tagDto);
+
+    void delTag(List<Integer> tagIdList);
 }

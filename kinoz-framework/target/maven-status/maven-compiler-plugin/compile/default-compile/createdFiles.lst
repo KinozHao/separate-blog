@@ -1,4 +1,3 @@
-com\kinoz\service\impl\CommentServiceImpl.class
 com\kinoz\service\UploadService.class
 com\kinoz\utils\JwtUtil.class
 com\kinoz\enums\AppHttpCodeEnum.class
@@ -9,10 +8,7 @@ com\kinoz\domain\pojo\LoginUser.class
 com\kinoz\domain\pojo\Link.class
 com\kinoz\constant\SystemConstant.class
 com\kinoz\mapper\UserMapper.class
-com\kinoz\service\impl\CategoryServiceImpl.class
 com\kinoz\domain\vo\UserInfoVo.class
-com\kinoz\service\impl\ArticleServiceImpl.class
-com\kinoz\service\impl\UploadServiceImpl.class
 com\kinoz\exception\SystemException.class
 com\kinoz\utils\BeanCopyUtils.class
 com\kinoz\mapper\CommentMapper.class
@@ -21,7 +17,6 @@ com\kinoz\service\CategoryService.class
 com\kinoz\handler\security\AuthenticationEntryPointImpl.class
 com\kinoz\service\BlogLoginService.class
 com\kinoz\config\RedisConfig.class
-com\kinoz\service\impl\UserDetailServiceImpl.class
 com\kinoz\mapper\CategoryMapper.class
 com\kinoz\service\ArticleService.class
 com\kinoz\domain\ResponseResult.class
@@ -36,11 +31,8 @@ com\kinoz\domain\pojo\Comment.class
 com\kinoz\domain\vo\HotArticleVo.class
 com\kinoz\domain\pojo\Article.class
 com\kinoz\config\MybatisPlusConfig.class
-com\kinoz\service\impl\LinkServiceImpl.class
-com\kinoz\service\impl\UserServiceImpl.class
 com\kinoz\service\LinkService.class
 com\kinoz\mapper\ArticleMapper.class
-com\kinoz\service\impl\BlogLoginServiceImpl.class
 com\kinoz\utils\WebUtils.class
 com\kinoz\domain\vo\LinkVo.class
 com\kinoz\domain\vo\PageVo.class

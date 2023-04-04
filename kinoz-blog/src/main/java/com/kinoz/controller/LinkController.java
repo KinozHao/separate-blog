@@ -1,9 +1,7 @@
 package com.kinoz.controller;
 
 import com.kinoz.domain.ResponseResult;
-import com.kinoz.mapper.LinkMapper;
 import com.kinoz.service.LinkService;
-import com.kinoz.service.impl.LinkServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
