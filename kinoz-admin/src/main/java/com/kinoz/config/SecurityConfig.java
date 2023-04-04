@@ -1,4 +1,4 @@
-package com.kinoz.security;
+package com.kinoz.config;
 
 import com.kinoz.filter.JwtAuthenticationTokenFilter;
 import org.springframework.context.annotation.Bean;
@@ -49,17 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                /*.antMatchers("/login").anonymous()
-                // 对于登出接空 要求请求头携带token
-                .antMatchers("logout").authenticated()
-                // 对友联接口 必须认证才能查看
-                //.antMatchers("/link/getAllLink").authenticated()
-                //个人信息接口必须登录后才能访问
-                .antMatchers("/user/userInfo").authenticated()*/
-                //上传图片,需要认证,前端不需要认证所以注释掉即可
-                //.antMatchers("/upload").authenticated()
-                // 除上面外的所有请求全部不需要认证即可访问
-                .anyRequest().permitAll();
+                .antMatchers("/user/login").anonymous()
+                // 除上面外的所有请求全部需要认证授权
+                .anyRequest().authenticated();
 
         //关闭security默认的登出接口
         http.logout().disable();
