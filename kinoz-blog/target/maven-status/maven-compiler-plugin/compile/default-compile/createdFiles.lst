@@ -4,7 +4,11 @@ com\kinoz\controller\UploadController.class
 com\kinoz\filter\JwtAuthenticationTokenFilter.class
 com\kinoz\controller\CommentController.class
 com\kinoz\controller\CategoryController.class
+com\kinoz\job\TestRunner.class
+com\kinoz\job\UpdateViewCountJob.class
 com\kinoz\blogStart.class
 com\kinoz\config\SecurityConfig.class
 com\kinoz\controller\UserController.class
 com\kinoz\controller\ArticleController.class
+com\kinoz\job\TestJob.class
+com\kinoz\config\SwaggerConfig.class

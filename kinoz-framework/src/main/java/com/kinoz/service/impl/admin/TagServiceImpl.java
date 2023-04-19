@@ -14,9 +14,15 @@ import com.kinoz.service.TagService;
 import com.kinoz.mapper.TagMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
+
 
 /**
 * @author Hao
@@ -64,16 +70,47 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
     @Override
-    public void delTag(List<Integer> tagIdList) {
+    public void delTag(Long tagId) {
         //判断标签下是否有文章
-        var wrapper = new LambdaQueryWrapper<ArticleTag>();
-        wrapper.in(ArticleTag::getArticleId,tagIdList);
+        /*var wrapper = new LambdaQueryWrapper<ArticleTag>();
+        wrapper.in(ArticleTag::getArticleId,tagId);
         Long count = Long.valueOf(articleTagMapper.selectCount(wrapper));
         //删除提示
-        Assert.isFalse(count > 0, "删除失败，标签下存在文章");
-        //批量删除标签
-        tagMapper.deleteBatchIds(tagIdList);
+        Assert.isFalse(count > 0, "删除失败，标签下存在文章");*/
+        //删除标签
+        baseMapper.deleteById(tagId);
+        //TODO 批量删除标签
     }
+
+    @Override
+    public Tag getTag(Long id) {
+        Tag tag = baseMapper.selectById(id);
+        if (tag == null) {
+            throw new RuntimeException("查询的标签不存在");
+        }
+        return tag;
+    }
+
+    @Override
+    @Transactional
+    public void updateTag(TagDto tagDto) {
+        // 标签是否存在
+        var wrapper = new LambdaQueryWrapper<Tag>();
+        wrapper.select(Tag::getId).eq(Tag::getName,tagDto.getName());
+        Tag existTag = tagMapper.selectOne(wrapper);
+        //如果标签存在给出异常
+        Assert.isNull(existTag,tagDto.getName()+"标签已存在");
+
+        // 修改标签
+        Tag newTage = Tag
+                .builder()
+                .id(tagDto.getId())
+                .name(tagDto.getName())
+                .remark(tagDto.getRemark()).build();
+        baseMapper.updateById(newTage);
+
+    }
+
 }
 
 

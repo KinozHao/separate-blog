@@ -1,0 +1,5 @@
+com\kinoz\filter\JwtAuthenticationTokenFilter.class
+com\kinoz\adminStarter.class
+com\kinoz\controller\LoginController.class
+com\kinoz\config\SecurityConfig.class
+com\kinoz\controller\TagController.class

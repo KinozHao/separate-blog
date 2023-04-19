@@ -2,9 +2,12 @@ package com.kinoz.controller;
 
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.TagDto;
+import com.kinoz.domain.pojo.Tag;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.service.TagService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +16,13 @@ import java.util.List;
 * 标签管理
 * */
 @RestController
+//@RequestMapping("/content/tag")
 public class TagController {
     @Autowired
     private TagService tagService;
 
     /**
-     * 显示后台标签
+     * 展示标签
      * @param pageNum
      * @param pageSize
      * @param
@@ -40,11 +44,35 @@ public class TagController {
         return ResponseResult.okResult();
     }
 
+    /**
+     * 删除标签
+     * @param
+     * @return
+     */
     @DeleteMapping("/content/tag/{id}")
-    public ResponseResult<?> delTag(@PathVariable("id") List<Integer> tagIdList){
-        tagService.delTag(tagIdList);
+    public ResponseResult<?> delTag(@PathVariable("id") Long id){
+        tagService.delTag(id);
         return ResponseResult.okResult();
     }
+
+    /**
+     * 查询标签
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/content/tag/{id}")
+    public ResponseResult<?> getTag(@PathVariable Long id){
+        Tag tag = tagService.getTag(id);
+        return ResponseResult.okResult(tag);
+    }
+
+    @PutMapping("/content/tag")
+    public ResponseResult<?> updateTag(@Validated @RequestBody TagDto tagDto){
+        tagService.updateTag(tagDto);
+        return ResponseResult.okResult();
+    }
+
 
 
 }

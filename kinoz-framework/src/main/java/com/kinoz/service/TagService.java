@@ -15,9 +15,19 @@ import java.util.List;
 */
 public interface TagService extends IService<Tag> {
 
+    //展示标签
     ResponseResult<PageVo> list(Integer pageNum, Integer pageSize, TagDto tagListDto);
 
+    //添加标签
     void addTag(TagDto tagDto);
 
-    void delTag(List<Integer> tagIdList);
+    //删除单个标签
+    void delTag(Long tagId);
+
+    Tag getTag(Long id);
+
+    void updateTag(TagDto tagDto);
+
+
+
 }
