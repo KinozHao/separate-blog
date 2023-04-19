@@ -1,4 +1,4 @@
-package com.kinoz.service.impl.blog;
+package com.kinoz.service.impl;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.google.gson.Gson;

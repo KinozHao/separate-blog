@@ -1,8 +1,10 @@
 package com.kinoz.service;
 
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.CategoryDto;
 import com.kinoz.domain.pojo.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kinoz.domain.vo.PageVo;
 
 /**
 * @author haogu
@@ -13,4 +15,6 @@ public interface CategoryService extends IService<Category> {
 
     //分类列表
     ResponseResult getCategoryList();
+
+    ResponseResult<PageVo> showCategoryList(Integer pageNum, Integer pageSize, CategoryDto categoryDto);
 }

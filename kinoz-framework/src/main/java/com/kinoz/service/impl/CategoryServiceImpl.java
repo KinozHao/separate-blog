@@ -1,18 +1,23 @@
-package com.kinoz.service.impl.blog;
+package com.kinoz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.CategoryDto;
 import com.kinoz.domain.pojo.Article;
 import com.kinoz.domain.pojo.Category;
+import com.kinoz.domain.pojo.Link;
 import com.kinoz.domain.vo.CategoryVo;
+import com.kinoz.domain.vo.PageVo;
 import com.kinoz.service.ArticleService;
 import com.kinoz.service.CategoryService;
 import com.kinoz.mapper.CategoryMapper;
 import com.kinoz.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -68,6 +73,22 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         //封装vo
         List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(sgCategories, CategoryVo.class);
         return ResponseResult.okResult(categoryVos);
+    }
+
+    @Override
+    public ResponseResult<PageVo> showCategoryList(Integer pageNum, Integer pageSize, CategoryDto categoryDto) {
+        //分页查询
+        var wrapper = new LambdaQueryWrapper<Category>();
+        wrapper.eq(StringUtils.hasText(categoryDto.getName()),Category::getName,categoryDto.getName());
+        wrapper.eq(StringUtils.hasText(categoryDto.getStatus()),Category::getStatus,categoryDto.getStatus());
+        var page = new Page<Category>();
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        page(page,wrapper);
+
+        //封装数据返回
+        PageVo pageVo = new PageVo(page.getRecords(), page.getTotal());
+        return ResponseResult.okResult(pageVo);
     }
 
 

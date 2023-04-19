@@ -1,4 +1,4 @@
-package com.kinoz.service.impl.blog;
+package com.kinoz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kinoz.domain.pojo.LoginUser;

@@ -1,4 +1,4 @@
-package com.kinoz.service.impl.blog;
+package com.kinoz.service.impl;
 
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.pojo.LoginUser;

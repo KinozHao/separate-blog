@@ -1,12 +1,14 @@
-package com.kinoz.service.impl.blog;
+package com.kinoz.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.ArticleDto;
 import com.kinoz.domain.pojo.Article;
 import com.kinoz.domain.pojo.Category;
+import com.kinoz.domain.pojo.Link;
 import com.kinoz.domain.vo.ArticleDetailVo;
 import com.kinoz.domain.vo.ArticleListVo;
 import com.kinoz.domain.vo.HotArticleVo;
@@ -17,6 +19,7 @@ import com.kinoz.service.CategoryService;
 import com.kinoz.utils.BeanCopyUtils;
 import com.kinoz.utils.RedisCache;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -174,6 +177,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         //更新redis中对应id的浏览量
         redisCache.incrementCacheMapValue(SystemConstant.REDIS_VIEW_KEY,id.toString(),1);
         return null;
+    }
+
+    @Override
+    public ResponseResult<PageVo> showArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto) {
+        //分页查询
+        var wrapper = new LambdaQueryWrapper<Article>();
+        wrapper.eq(StringUtils.hasText(articleDto.getTitle()),Article::getTitle,articleDto.getTitle());
+        wrapper.eq(StringUtils.hasText(articleDto.getSummary()),Article::getSummary,articleDto.getSummary());
+        var page = new Page<Article>();
+        page.setCurrent(pageNum);
+        page.setSize(pageSize);
+        page(page,wrapper);
+
+        //封装数据返回
+        PageVo pageVo = new PageVo(page.getRecords(), page.getTotal());
+        return ResponseResult.okResult(pageVo);
     }
 
 

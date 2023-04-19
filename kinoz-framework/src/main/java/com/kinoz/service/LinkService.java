@@ -1,8 +1,11 @@
 package com.kinoz.service;
 
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.LinkDto;
+import com.kinoz.domain.dto.TagDto;
 import com.kinoz.domain.pojo.Link;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kinoz.domain.vo.PageVo;
 
 /**
 * @author haogu
@@ -12,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface LinkService extends IService<Link> {
 
     ResponseResult getAllLink();
+
+    ResponseResult<PageVo> showLinkList(Integer pageNum, Integer pageSize, LinkDto linkDto);
 }

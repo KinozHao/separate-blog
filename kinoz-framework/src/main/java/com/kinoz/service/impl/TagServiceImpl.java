@@ -1,4 +1,4 @@
-package com.kinoz.service.impl.admin;
+package com.kinoz.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

@@ -2,7 +2,9 @@ package com.kinoz.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.ArticleDto;
 import com.kinoz.domain.pojo.Article;
+import com.kinoz.domain.vo.PageVo;
 
 /**
  * @author kinoz
@@ -22,4 +24,10 @@ public interface ArticleService extends IService<Article> {
 
     //更新redis中对应id的文章浏览量
     ResponseResult updateViewCount(Long id);
+
+
+    //------------------------
+
+    //展示文章数据
+    ResponseResult<PageVo> showArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto);
 }
