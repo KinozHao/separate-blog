@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.TagDto;
-import com.kinoz.domain.pojo.ArticleTag;
 import com.kinoz.domain.pojo.Tag;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.mapper.ArticleTagMapper;
@@ -16,12 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 
 /**
@@ -40,7 +33,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     ArticleTagMapper articleTagMapper;
 
     @Override
-    public ResponseResult<PageVo> list(Integer pageNum, Integer pageSize, TagDto tagListDto) {
+    public ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, TagDto tagListDto) {
         //分页查询
         var wrapper = new LambdaQueryWrapper<Tag>();
         wrapper.eq(StringUtils.hasText(tagListDto.getName()),Tag::getName,tagListDto.getName());
@@ -70,13 +63,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
     @Override
-    public void delTag(Long tagId) {
-        //判断标签下是否有文章
-        /*var wrapper = new LambdaQueryWrapper<ArticleTag>();
-        wrapper.in(ArticleTag::getArticleId,tagId);
-        Long count = Long.valueOf(articleTagMapper.selectCount(wrapper));
-        //删除提示
-        Assert.isFalse(count > 0, "删除失败，标签下存在文章");*/
+    public void delTagById(Long tagId) {
+        //TODO 判断被删除标签下是否有文章
+
         //删除标签
         baseMapper.deleteById(tagId);
         //TODO 批量删除标签
@@ -108,7 +97,6 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
                 .name(tagDto.getName())
                 .remark(tagDto.getRemark()).build();
         baseMapper.updateById(newTage);
-
     }
 
 }

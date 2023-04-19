@@ -7,10 +7,10 @@ import java.util.List;
 
 /**
 * @author Hao
-* @description 针对表【sys_role(角色信息表)】的数据库操作Service
+* @description 用户权限信息相关
 * @createDate 2023-04-05 14:14:33
 */
 public interface RoleService extends IService<Role> {
 
-    List<String> selectRoleByUserId(Long id);
+    List<String> selectRoleInfoByUserId(Long id);
 }

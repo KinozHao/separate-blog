@@ -57,9 +57,9 @@ public class LoginController {
         //获取当前登录的用户
         LoginUser loginUser = SecurityUtils.getLoginUser();
         //根据用户id查询权限
-        List<String> perms = menuService.selectParamByUserId(loginUser.getUser().getId());
+        List<String> perms = menuService.selectPermissionsByUserId(loginUser.getUser().getId());
         //根据用户id查询角色信息
-        List<String> roles = roleService.selectRoleByUserId(loginUser.getUser().getId());
+        List<String> roles = roleService.selectRoleInfoByUserId(loginUser.getUser().getId());
         //获取用户信息
         User user = loginUser.getUser();
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(user, UserInfoVo.class);
@@ -70,7 +70,7 @@ public class LoginController {
     }
 
     /**
-     * 动态路由
+     * 查询登录用户拥有哪些菜单功能
      * @return
      */
     @GetMapping("getRouters")

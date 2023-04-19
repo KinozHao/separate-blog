@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
 * @author Hao
-* @description 查询用户账户的角色是什么
+* @description 查询用户角色
 * @createDate 2023-04-05 14:14:33
 */
 @Service
@@ -20,7 +20,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
     implements RoleService{
 
     @Override
-    public List<String> selectRoleByUserId(Long id) {
+    public List<String> selectRoleInfoByUserId(Long id) {
         //判断是不是管理员 如果是返回集合中只需包括admin
         if (id == 1L){
             List<String> roleKeys = new ArrayList<>();

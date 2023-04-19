@@ -8,26 +8,24 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 /**
  * @author kinoz
  * @Date 2023/3/2 19:54
- * @apiNote fastjson消息转换器
- * 解决前端页面时间显示格式的问题
+ * @apiNote web相关配置
  */
 @Configuration
-public class FastJsonConfig {
+public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
     /**
      * 此方法已被@JsonFormat取代
      * 但是JsonFormat返给前端的数据存在问题
      * @see com.kinoz.domain.pojo.Article
      * @return
      */
+    @Bean
     public HttpMessageConverter fastJsonHttpMessageConverters() {
         //1.需要定义一个Convert转换消息的对象
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
@@ -41,5 +39,19 @@ public class FastJsonConfig {
         fastConverter.setFastJsonConfig(fastJsonConfig);
         HttpMessageConverter<?> converter = fastConverter;
         return converter;
+    }
+
+    /**
+     * 解决前后端跨域问题
+     * @param registry
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // 所有接口
+                .allowCredentials(true) // 是否发送 Cookie
+                .allowedOriginPatterns("*") // 支持域
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // 支持方法
+                .allowedHeaders("*")
+                .exposedHeaders("*");
     }
 }

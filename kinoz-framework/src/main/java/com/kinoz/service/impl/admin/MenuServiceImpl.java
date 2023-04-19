@@ -22,7 +22,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
     implements MenuService{
 
     @Override
-    public List<String> selectParamByUserId(Long id) {
+    public List<String> selectPermissionsByUserId(Long id) {
         //如果是管理员具备所有权限 1L即为管理员
         if (SecurityUtils.isAdmin()){
            var wrapper = new LambdaQueryWrapper<Menu>();

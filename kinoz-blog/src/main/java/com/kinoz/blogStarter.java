@@ -17,8 +17,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 //开启定时任务功能
 @EnableScheduling
-public class blogStart {
+public class blogStarter {
     public static void main(String[] args) {
-        ConfigurableApplicationContext run = SpringApplication.run(blogStart.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(blogStarter.class, args);
     }
 }

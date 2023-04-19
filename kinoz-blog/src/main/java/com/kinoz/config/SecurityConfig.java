@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/login").anonymous()
-                // 对于登出接空 要求请求头携带token
+                // 对于登出接口 要求请求头携带token
                 .antMatchers("logout").authenticated()
                 // 对友联接口 必须认证才能查看
                 //.antMatchers("/link/getAllLink").authenticated()

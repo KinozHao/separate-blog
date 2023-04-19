@@ -16,7 +16,6 @@ import java.util.List;
 * 标签管理
 * */
 @RestController
-//@RequestMapping("/content/tag")
 public class TagController {
     @Autowired
     private TagService tagService;
@@ -29,8 +28,8 @@ public class TagController {
      * @return
      */
     @GetMapping("/content/tag/list")
-    public ResponseResult<PageVo> tagList(Integer pageNum, Integer pageSize, TagDto tagDto){
-        return tagService.list(pageNum,pageSize,tagDto);
+    public ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, TagDto tagDto){
+        return tagService.showTagList(pageNum,pageSize,tagDto);
     }
 
     /**
@@ -51,7 +50,7 @@ public class TagController {
      */
     @DeleteMapping("/content/tag/{id}")
     public ResponseResult<?> delTag(@PathVariable("id") Long id){
-        tagService.delTag(id);
+        tagService.delTagById(id);
         return ResponseResult.okResult();
     }
 
@@ -67,6 +66,12 @@ public class TagController {
         return ResponseResult.okResult(tag);
     }
 
+
+    /**
+     * 修改标签
+     * @param tagDto
+     * @return
+     */
     @PutMapping("/content/tag")
     public ResponseResult<?> updateTag(@Validated @RequestBody TagDto tagDto){
         tagService.updateTag(tagDto);
