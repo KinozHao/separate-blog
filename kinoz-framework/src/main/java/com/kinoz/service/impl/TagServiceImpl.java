@@ -6,15 +6,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.TagDto;
+import com.kinoz.domain.pojo.Category;
 import com.kinoz.domain.pojo.Tag;
+import com.kinoz.domain.vo.CategoryVo;
 import com.kinoz.domain.vo.PageVo;
+import com.kinoz.domain.vo.TagVo;
 import com.kinoz.mapper.ArticleTagMapper;
 import com.kinoz.service.TagService;
 import com.kinoz.mapper.TagMapper;
+import com.kinoz.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 
 /**
@@ -97,6 +103,14 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
                 .name(tagDto.getName())
                 .remark(tagDto.getRemark()).build();
         baseMapper.updateById(newTage);
+    }
+
+    @Override
+    public List<TagVo> listAllTag() {
+        // 查询分类
+        List<Tag> categoryList = tagMapper.selectList(new LambdaQueryWrapper<Tag>()
+                .orderByDesc(Tag::getId));
+        return BeanCopyUtils.copyBeanList(categoryList, TagVo.class);
     }
 
 }

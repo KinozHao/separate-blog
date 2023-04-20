@@ -33,4 +33,13 @@ public class CategoryController {
     public ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, CategoryDto categoryDto){
         return categoryService.showCategoryList(pageNum,pageSize,categoryDto);
     }
+
+    /**
+     * 写博文 分类展示
+     * @return
+     */
+    @GetMapping("/content/category/listAllCategory")
+    public ResponseResult<?> listAllCategory(){
+         return  ResponseResult.okResult(categoryService.listAllCategory());
+    }
 }

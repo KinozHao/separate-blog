@@ -8,7 +8,6 @@ import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.CategoryDto;
 import com.kinoz.domain.pojo.Article;
 import com.kinoz.domain.pojo.Category;
-import com.kinoz.domain.pojo.Link;
 import com.kinoz.domain.vo.CategoryVo;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.service.ArticleService;
@@ -33,6 +32,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     implements CategoryService {
     @Autowired
     ArticleService articleService;  //查询文章表时需要使用articleService
+    @Autowired
+    CategoryMapper categoryMapper;
 
     /**
      *  页面上需要展示分类列表，用户可以点击具体的分类查看该分类下的文章列表。
@@ -89,6 +90,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         //封装数据返回
         PageVo pageVo = new PageVo(page.getRecords(), page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public List<CategoryVo> listAllCategory() {
+        // 查询分类
+        List<Category> categoryList = categoryMapper.selectList(new LambdaQueryWrapper<Category>()
+                .orderByDesc(Category::getId));
+        return BeanCopyUtils.copyBeanList(categoryList, CategoryVo.class);
     }
 
 

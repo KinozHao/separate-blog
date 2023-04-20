@@ -5,6 +5,9 @@ import com.kinoz.domain.dto.TagDto;
 import com.kinoz.domain.pojo.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.kinoz.domain.vo.PageVo;
+import com.kinoz.domain.vo.TagVo;
+
+import java.util.List;
 
 /**
 * @author Hao
@@ -26,5 +29,8 @@ public interface TagService extends IService<Tag> {
 
     //更新标签信息
     void updateTag(TagDto tagDto);
+
+    //写博文 标签
+    List<TagVo> listAllTag();
 
 }

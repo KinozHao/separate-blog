@@ -79,5 +79,15 @@ public class TagController {
     }
 
 
+    /**
+     * 写博文 标签展示
+     * @return
+     */
+    @GetMapping("/content/tag/listAllTag")
+    public ResponseResult<?> listAllTag(){
+        return ResponseResult.okResult(tagService.listAllTag());
+    }
+
+
 
 }
