@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Author Hao Kinoz
  * @Description
@@ -23,4 +25,5 @@ public class TagVo {
      * 标签名称
      */
     private String name;
+
 }

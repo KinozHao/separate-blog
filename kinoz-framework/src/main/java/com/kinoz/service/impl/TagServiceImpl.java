@@ -69,12 +69,11 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
     @Override
-    public void delTagById(Long tagId) {
-        //TODO 判断被删除标签下是否有文章
+    public void delTagById(List<Long> tagId) {
+        for (Long id : tagId) {
+            removeById(id);
+        }
 
-        //删除标签
-        baseMapper.deleteById(tagId);
-        //TODO 批量删除标签
     }
 
     @Override
@@ -107,10 +106,11 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
 
     @Override
     public List<TagVo> listAllTag() {
-        // 查询分类
-        List<Tag> categoryList = tagMapper.selectList(new LambdaQueryWrapper<Tag>()
-                .orderByDesc(Tag::getId));
-        return BeanCopyUtils.copyBeanList(categoryList, TagVo.class);
+        LambdaQueryWrapper<Tag> wrapper = new LambdaQueryWrapper<>();
+        wrapper.select(Tag::getId,Tag::getName);
+        List<Tag> list = list(wrapper);
+        List<TagVo> tagVos = BeanCopyUtils.copyBeanList(list, TagVo.class);
+        return tagVos;
     }
 
 }

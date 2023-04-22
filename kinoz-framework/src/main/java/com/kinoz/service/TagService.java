@@ -15,22 +15,17 @@ import java.util.List;
 * @createDate 2023-04-02 18:49:37
 */
 public interface TagService extends IService<Tag> {
-    //展示标签
+
     ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, TagDto tagListDto);
 
-    //添加标签
     void addTag(TagDto tagDto);
 
-    //删除单个标签
-    void delTagById(Long tagId);
+    void delTagById(List<Long> tagId);
 
-    //获取标签
     Tag getTag(Long id);
 
-    //更新标签信息
     void updateTag(TagDto tagDto);
 
-    //写博文 标签
     List<TagVo> listAllTag();
 
 }

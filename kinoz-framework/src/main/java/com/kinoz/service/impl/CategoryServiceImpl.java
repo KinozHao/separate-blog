@@ -95,9 +95,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     @Override
     public List<CategoryVo> listAllCategory() {
         // 查询分类
-        List<Category> categoryList = categoryMapper.selectList(new LambdaQueryWrapper<Category>()
+        /*List<Category> categoryList = categoryMapper.selectList(new LambdaQueryWrapper<Category>()
                 .orderByDesc(Category::getId));
-        return BeanCopyUtils.copyBeanList(categoryList, CategoryVo.class);
+        return BeanCopyUtils.copyBeanList(categoryList, CategoryVo.class);*/
+
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Category::getStatus, SystemConstant.CATEGORY_STATUS_NORMAL);
+        List<Category> list = list(wrapper);
+        List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(list, CategoryVo.class);
+        return categoryVos;
     }
 
 

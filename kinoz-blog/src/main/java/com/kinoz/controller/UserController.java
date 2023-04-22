@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PutMapping("/userInfo")
-    @SystemLog(bussinessName = "updateUserInfo" )
+    @SystemLog(note = "updateUserInfo" )
     public ResponseResult updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
     }

@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.dto.AddArticleDto;
 import com.kinoz.domain.dto.ArticleDto;
 import com.kinoz.domain.pojo.Article;
+import com.kinoz.domain.pojo.ArticleTag;
 import com.kinoz.domain.pojo.Category;
 import com.kinoz.domain.pojo.Link;
 import com.kinoz.domain.vo.ArticleDetailVo;
@@ -15,6 +17,7 @@ import com.kinoz.domain.vo.HotArticleVo;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.mapper.ArticleMapper;
 import com.kinoz.service.ArticleService;
+import com.kinoz.service.ArticleTagService;
 import com.kinoz.service.CategoryService;
 import com.kinoz.utils.BeanCopyUtils;
 import com.kinoz.utils.RedisCache;
@@ -40,6 +43,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
     CategoryService categoryService;
     @Resource
     RedisCache redisCache;
+    @Resource
+    ArticleTagService articleTagService;
 
     /**
      *  需要查询浏览量最高的前10篇文章的信息。要求展示文章标题和浏览量。把能让用户自己点击跳转到具体的文章详情进行浏览。
@@ -193,6 +198,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         //封装数据返回
         PageVo pageVo = new PageVo(page.getRecords(), page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult add(AddArticleDto articleDto) {
+        //添加 博客
+        Article article = BeanCopyUtils.copyBean(articleDto, Article.class);
+        save(article);
+
+        List<ArticleTag> articleTags = articleDto.getTags().stream()
+                .map(tagId -> new ArticleTag(article.getId(), tagId))
+                .collect(Collectors.toList());
+
+        //添加 博客和标签的关联
+        articleTagService.saveBatch(articleTags);
+        return ResponseResult.okResult();
     }
 
 
