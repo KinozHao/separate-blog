@@ -4,11 +4,15 @@ import com.kinoz.annotation.SystemLog;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.AddArticleDto;
 import com.kinoz.domain.dto.ArticleDto;
+import com.kinoz.domain.dto.CategoryDto;
 import com.kinoz.domain.dto.LinkDto;
+import com.kinoz.domain.pojo.Article;
+import com.kinoz.domain.vo.ArticleVo;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.service.ArticleService;
 import com.kinoz.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,7 +37,19 @@ public class ArticleController {
         return articleService.add(article);
     }
 
-    @DeleteMapping("{id}")
+
+    @GetMapping("/{id}")
+    public ResponseResult getArticle(@PathVariable(value = "id") Long id){
+        ArticleVo adminArticle = articleService.getAdminArticle(id);
+        return ResponseResult.okResult(adminArticle);
+    }
+    @PutMapping
+    public ResponseResult updateArticle(@RequestBody ArticleDto article){
+        articleService.updateArticle(article);
+        return ResponseResult.okResult();
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseResult delArticle(@PathVariable Long id){
         articleService.delArticle(id);
         return ResponseResult.okResult();

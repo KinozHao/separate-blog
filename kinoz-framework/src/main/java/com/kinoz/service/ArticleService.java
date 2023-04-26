@@ -5,6 +5,7 @@ import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.AddArticleDto;
 import com.kinoz.domain.dto.ArticleDto;
 import com.kinoz.domain.pojo.Article;
+import com.kinoz.domain.vo.ArticleVo;
 import com.kinoz.domain.vo.PageVo;
 
 /**
@@ -35,4 +36,8 @@ public interface ArticleService extends IService<Article> {
     ResponseResult add(AddArticleDto article);
 
     void delArticle(Long id);
+
+    void updateArticle(ArticleDto articleDto);
+
+    ArticleVo getAdminArticle(Long id);
 }

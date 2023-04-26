@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author kinoz
@@ -21,6 +23,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @TableName("sg_article")
 @Accessors(chain = true)
 public class Article {
@@ -72,4 +75,5 @@ public class Article {
         this.id = id;
         this.viewCount = viewCount;
     }
+
 }

@@ -7,14 +7,8 @@ import com.kinoz.constant.SystemConstant;
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.AddArticleDto;
 import com.kinoz.domain.dto.ArticleDto;
-import com.kinoz.domain.pojo.Article;
-import com.kinoz.domain.pojo.ArticleTag;
-import com.kinoz.domain.pojo.Category;
-import com.kinoz.domain.pojo.Link;
-import com.kinoz.domain.vo.ArticleDetailVo;
-import com.kinoz.domain.vo.ArticleListVo;
-import com.kinoz.domain.vo.HotArticleVo;
-import com.kinoz.domain.vo.PageVo;
+import com.kinoz.domain.pojo.*;
+import com.kinoz.domain.vo.*;
 import com.kinoz.mapper.ArticleMapper;
 import com.kinoz.service.ArticleService;
 import com.kinoz.service.ArticleTagService;
@@ -28,9 +22,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author kinoz
@@ -202,7 +194,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
 
     @Override
     public ResponseResult add(AddArticleDto articleDto) {
-        //添加 博客
+        //添加博客
         Article article = BeanCopyUtils.copyBean(articleDto, Article.class);
         save(article);
 
@@ -220,5 +212,37 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         removeById(articleId);
     }
 
+
+
+    @Override
+    public ArticleVo getAdminArticle(Long id) {
+        Article article = getById(id);
+        //获取关联标签
+        LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        articleTagLambdaQueryWrapper.eq(ArticleTag::getArticleId,article.getId());
+        List<ArticleTag> articleTags = articleTagService.list(articleTagLambdaQueryWrapper);
+        List<Long> tags = articleTags.stream().map(articleTag -> articleTag.getTagId()).collect(Collectors.toList());
+
+        ArticleVo articleVo = BeanCopyUtils.copyBean(article,ArticleVo.class);
+        articleVo.setTags(tags);
+        return articleVo;
+    }
+
+    @Override
+    public void updateArticle(ArticleDto articleDto) {
+        Article article = BeanCopyUtils.copyBean(articleDto, Article.class);
+        //更新博客信息
+        updateById(article);
+        //删除原有的 标签和博客的关联
+        LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        articleTagLambdaQueryWrapper.eq(ArticleTag::getArticleId,article.getId());
+        articleTagService.remove(articleTagLambdaQueryWrapper);
+        //添加新的博客和标签的关联信息
+        List<ArticleTag> articleTags = articleDto.getTags().stream()
+                .map(tagId -> new ArticleTag(articleDto.getId(), tagId))
+                .collect(Collectors.toList());
+        articleTagService.saveBatch(articleTags);
+
+    }
 
 }

@@ -3,8 +3,10 @@ package com.kinoz.service.impl;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.google.gson.Gson;
 import com.kinoz.domain.ResponseResult;
+import com.kinoz.domain.pojo.User;
 import com.kinoz.enums.AppHttpCodeEnum;
 import com.kinoz.exception.SystemException;
+import com.kinoz.mapper.UserMapper;
 import com.kinoz.service.UploadService;
 import com.kinoz.service.UserService;
 import com.kinoz.utils.PathUtils;
@@ -41,6 +43,8 @@ public class UploadServiceImpl implements UploadService {
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserMapper userMapper;
 
 
         @Override
@@ -49,21 +53,23 @@ public class UploadServiceImpl implements UploadService {
         //获取原始文件名
         String originalFilename = img.getOriginalFilename();
         //对原始文件名进行判断
-        if(!originalFilename.endsWith(".png")){
+        /*if(!originalFilename.endsWith(".png")){
             throw new SystemException(AppHttpCodeEnum.FILE_TYPE_ERROR);
-        }
+        }*/
 
         //如果判断通过上传文件到OSS
         String filePath = PathUtils.generateFilePath(originalFilename);
-        String url = uploadOss(img,filePath);//  2099/2/3/wqeqeqe.png
+        //格式:2099/2/3/wqeqeqe.png
+        String url = uploadOss(img,filePath);
 
-        //TODO 将头像上传至数据库
-       // Long id = SecurityUtils.getUserId();
-
+        //将头像上传至数据库
+        /*Long userId = SecurityUtils.getUserId();
+        User user = new User();
+        user.setAvatar(url);
+        user.setId(userId);
+        userMapper.updateById(user);*/
         return ResponseResult.okResult(url);
     }
-
-
 
 
     private String uploadOss(MultipartFile imgFile, String filePath){
