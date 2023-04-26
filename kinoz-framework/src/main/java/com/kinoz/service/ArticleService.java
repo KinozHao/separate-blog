@@ -27,10 +27,12 @@ public interface ArticleService extends IService<Article> {
     ResponseResult updateViewCount(Long id);
 
 
-    //------------------------
+    //-----------admin相关-------------
 
     //展示文章数据
     ResponseResult<PageVo> showArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto);
 
     ResponseResult add(AddArticleDto article);
+
+    void delArticle(Long id);
 }

@@ -39,7 +39,7 @@ public class TagController {
     }
 
     @PutMapping
-    @SystemLog(note = "更新标签")
+    @SystemLog(note = "修改标签")
     public ResponseResult updateTag(@RequestBody TagDto tagDto){
         tagService.updateTag(tagDto);
         return ResponseResult.okResult();
@@ -54,6 +54,7 @@ public class TagController {
 
 
     @GetMapping("/listAllTag")
+    @SystemLog(note = "写博文")
     public ResponseResult listAllTag(){
         List<TagVo> list = tagService.listAllTag();
         return ResponseResult.okResult(list);

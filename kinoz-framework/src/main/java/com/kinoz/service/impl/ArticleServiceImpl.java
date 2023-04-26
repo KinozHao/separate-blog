@@ -215,5 +215,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         return ResponseResult.okResult();
     }
 
+    @Override
+    public void delArticle(Long articleId) {
+        removeById(articleId);
+    }
+
 
 }

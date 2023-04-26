@@ -22,4 +22,12 @@ public interface CategoryService extends IService<Category> {
     ResponseResult<PageVo> showCategoryList(Integer pageNum, Integer pageSize, CategoryDto categoryDto);
 
     List<CategoryVo> listAllCategory();
+
+    void addCategory(CategoryDto categoryDto);
+
+    void updateCategory(CategoryDto categoryDto);
+
+    void delCategory(List<Long> id);
+
+    Category getCategory(Long id);
 }

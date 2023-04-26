@@ -1,5 +1,6 @@
 package com.kinoz.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,6 +9,7 @@ import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.CategoryDto;
 import com.kinoz.domain.pojo.Article;
 import com.kinoz.domain.pojo.Category;
+import com.kinoz.domain.pojo.Tag;
 import com.kinoz.domain.vo.CategoryVo;
 import com.kinoz.domain.vo.PageVo;
 import com.kinoz.service.ArticleService;
@@ -106,7 +108,49 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         return categoryVos;
     }
 
+    @Override
+    public void addCategory(CategoryDto categoryDto) {
+        // 标签是否存在
+        var wrapper = new LambdaQueryWrapper<Category>();
+        wrapper.select(Category::getId).eq(Category::getName,categoryDto.getName());
+        Category existTag = categoryMapper.selectOne(wrapper);
+        //如果标签存在给出异常
+        Assert.isNull(existTag,categoryDto.getName()+"标签已存在");
 
+        // 添加新标签
+        Category newCategory = Category.builder().name(categoryDto.getName()).description(categoryDto.getDescription()).build();
+        baseMapper.insert(newCategory);
+    }
+
+    @Override
+    public void updateCategory(CategoryDto categoryDto) {
+        var wrapper = new LambdaQueryWrapper<Category>();
+        wrapper.select(Category::getId).eq(Category::getName,categoryDto.getName());
+        Category existCategory = categoryMapper.selectOne(wrapper);
+        //Assert.isNull(existCategory,categoryDto.getName()+"分类已存在");
+
+        Category newCategory = Category.builder().id(categoryDto.getId())
+                .name(categoryDto.getName())
+                .description(categoryDto.getDescription())
+                .status(categoryDto.getStatus()).build();
+        baseMapper.updateById(newCategory);
+    }
+
+    @Override
+    public void delCategory(List<Long> catId) {
+        for (Long id : catId){
+            removeById(id);
+        }
+    }
+
+    @Override
+    public Category getCategory(Long id) {
+        Category category = baseMapper.selectById(id);
+        if (category == null){
+            throw new RuntimeException("查询的分类不存在");
+        }
+        return category;
+    }
 }
 
 
