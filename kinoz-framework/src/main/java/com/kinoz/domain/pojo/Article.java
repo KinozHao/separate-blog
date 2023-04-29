@@ -57,12 +57,6 @@ public class Article {
 
     private Long createBy;
 
-    //todo 注解转换存在问题,前端并没有转换成功
-    //等同于FastJsonConfig
-    //jackson包下
-    //@JsonFormat(timezone = "GMT+8",pattern = "yyyy/MM/dd HH:mm:ss")
-    //Alibaba包下
-    //@JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private Long updateBy;
