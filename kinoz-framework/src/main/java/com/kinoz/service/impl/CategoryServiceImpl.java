@@ -78,6 +78,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         return ResponseResult.okResult(categoryVos);
     }
 
+
+    //---------------------------------后台相关接口------------------------------------
     @Override
     public ResponseResult<PageVo> showCategoryList(Integer pageNum, Integer pageSize, CategoryDto categoryDto) {
         //分页查询
@@ -96,11 +98,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
     @Override
     public List<CategoryVo> listAllCategory() {
-        // 查询分类
-        /*List<Category> categoryList = categoryMapper.selectList(new LambdaQueryWrapper<Category>()
-                .orderByDesc(Category::getId));
-        return BeanCopyUtils.copyBeanList(categoryList, CategoryVo.class);*/
-
         LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Category::getStatus, SystemConstant.CATEGORY_STATUS_NORMAL);
         List<Category> list = list(wrapper);
@@ -126,7 +123,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     public void updateCategory(CategoryDto categoryDto) {
         var wrapper = new LambdaQueryWrapper<Category>();
         wrapper.select(Category::getId).eq(Category::getName,categoryDto.getName());
-        Category existCategory = categoryMapper.selectOne(wrapper);
+        categoryMapper.selectOne(wrapper);
         //Assert.isNull(existCategory,categoryDto.getName()+"分类已存在");
 
         Category newCategory = Category.builder().id(categoryDto.getId())

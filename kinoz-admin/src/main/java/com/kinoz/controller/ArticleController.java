@@ -33,12 +33,11 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseResult add(@RequestBody AddArticleDto article){
+    public ResponseResult addArticle(@RequestBody AddArticleDto article){
         return articleService.add(article);
     }
 
-
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseResult getArticle(@PathVariable(value = "id") Long id){
         ArticleVo adminArticle = articleService.getAdminArticle(id);
         return ResponseResult.okResult(adminArticle);
@@ -49,7 +48,7 @@ public class ArticleController {
         return ResponseResult.okResult();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseResult delArticle(@PathVariable Long id){
         articleService.delArticle(id);
         return ResponseResult.okResult();

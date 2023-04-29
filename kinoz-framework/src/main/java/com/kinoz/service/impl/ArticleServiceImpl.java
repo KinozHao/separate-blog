@@ -176,6 +176,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
         return null;
     }
 
+    //---------------------------------后台相关接口------------------------------------
     @Override
     public ResponseResult<PageVo> showArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto) {
         //分页查询
@@ -202,7 +203,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
                 .map(tagId -> new ArticleTag(article.getId(), tagId))
                 .collect(Collectors.toList());
 
-        //添加 博客和标签的关联
+        //添加博客和标签的关联
         articleTagService.saveBatch(articleTags);
         return ResponseResult.okResult();
     }
@@ -211,7 +212,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
     public void delArticle(Long articleId) {
         removeById(articleId);
     }
-
 
 
     @Override

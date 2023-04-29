@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * 友链
@@ -18,6 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
+@Builder
 @TableName("sg_link")
 public class Link implements Serializable {
     /**

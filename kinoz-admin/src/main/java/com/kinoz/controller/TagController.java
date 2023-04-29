@@ -21,7 +21,7 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/list")
+    @GetMapping("list")
     public ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, TagDto tagDto){
         return tagService.showTagList(pageNum,pageSize,tagDto);
     }
@@ -32,28 +32,27 @@ public class TagController {
         return ResponseResult.okResult();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseResult delTag(@PathVariable("id") List<Long> id){
         tagService.delTagById(id);
         return ResponseResult.okResult();
     }
 
     @PutMapping
-    @SystemLog(note = "修改标签")
     public ResponseResult updateTag(@RequestBody TagDto tagDto){
         tagService.updateTag(tagDto);
         return ResponseResult.okResult();
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseResult getTag(@PathVariable Long id){
         Tag tag = tagService.getTag(id);
         return ResponseResult.okResult(tag);
     }
 
 
-    @GetMapping("/listAllTag")
+    @GetMapping("listAllTag")
     @SystemLog(note = "写博文")
     public ResponseResult listAllTag(){
         List<TagVo> list = tagService.listAllTag();

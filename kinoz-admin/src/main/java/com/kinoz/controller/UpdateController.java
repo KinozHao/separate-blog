@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * @Author Hao Kinoz
- * @Description
+ * @Description 后台图片上传相关
  * @Date 2023/4/20
  **/
 @RestController

@@ -5,7 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+/**
+ * @Author Hao Kinoz
+ * @Description 用于后台系统添加文章
+ * @Date 2023/4/29
+ **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

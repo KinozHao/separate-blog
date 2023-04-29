@@ -64,7 +64,10 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
         Assert.isNull(existTag,tagDto.getName()+"标签已存在");
 
         // 添加新标签
-        Tag newTage = Tag.builder().name(tagDto.getName()).remark(tagDto.getRemark()).build();
+        Tag newTage = Tag.builder()
+                .name(tagDto.getName())
+                .remark(tagDto.getRemark())
+                .build();
         baseMapper.insert(newTage);
     }
 
@@ -78,7 +81,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
 
     @Override
     public Tag getTag(Long id) {
-        Tag tag = baseMapper.selectById(id);
+        Tag tag = tagMapper.selectById(id);
         if (tag == null) {
             throw new RuntimeException("查询的标签不存在");
         }

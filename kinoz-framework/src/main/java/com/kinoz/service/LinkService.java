@@ -17,4 +17,12 @@ public interface LinkService extends IService<Link> {
     ResponseResult getAllLink();
 
     ResponseResult<PageVo> showLinkList(Integer pageNum, Integer pageSize, LinkDto linkDto);
+
+    void add(LinkDto linkDto);
+
+    void deleteById(Long id);
+
+    void updateLink(LinkDto linkDto);
+
+    Link getLink(Long id);
 }

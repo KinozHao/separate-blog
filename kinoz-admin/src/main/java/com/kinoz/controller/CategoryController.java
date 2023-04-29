@@ -29,45 +29,40 @@ public class CategoryController {
     CategoryService categoryService;
 
 
+    @SystemLog(note = "分页显示")
     @GetMapping("/list")
     public ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, CategoryDto categoryDto){
         return categoryService.showCategoryList(pageNum,pageSize,categoryDto);
     }
-
-
-    @SystemLog(note = "添加分类")
-    @PostMapping
-    public ResponseResult addCategory(@RequestBody CategoryDto categoryDto){
-        categoryService.addCategory(categoryDto);
-        return ResponseResult.okResult();
-    }
-
-    @SystemLog(note = "修改分类")
-    @PutMapping
-    public ResponseResult updateCategory(@RequestBody CategoryDto categoryDto){
-        categoryService.updateCategory(categoryDto);
-        return ResponseResult.okResult();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseResult getTag(@PathVariable Long id){
-        Category category = categoryService.getCategory(id);
-        return ResponseResult.okResult(category);
-    }
-
-    @SystemLog(note = "删除分类")
-    @DeleteMapping("{id}")
-    public ResponseResult delCategory(@PathVariable("id") List<Long> id){
-        categoryService.delCategory(id);
-        return ResponseResult.okResult();
-    }
-
 
     @GetMapping("/listAllCategory")
     @SystemLog(note = "写博文")
     public ResponseResult<?> listAllCategory(){
         List<CategoryVo> list = categoryService.listAllCategory();
         return ResponseResult.okResult(list);
-        //return  ResponseResult.okResult(categoryService.listAllCategory());
+    }
+
+    @PostMapping
+    public ResponseResult addCategory(@RequestBody CategoryDto categoryDto){
+        categoryService.addCategory(categoryDto);
+        return ResponseResult.okResult();
+    }
+
+    @PutMapping
+    public ResponseResult updateCategory(@RequestBody CategoryDto categoryDto){
+        categoryService.updateCategory(categoryDto);
+        return ResponseResult.okResult();
+    }
+
+    @GetMapping("{id}")
+    public ResponseResult getCategory(@PathVariable Long id){
+        Category category = categoryService.getCategory(id);
+        return ResponseResult.okResult(category);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseResult delCategory(@PathVariable("id") List<Long> id){
+        categoryService.delCategory(id);
+        return ResponseResult.okResult();
     }
 }
