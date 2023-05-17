@@ -1,4 +1,4 @@
-package com.kinoz.controller;
+package com.kinoz.controller.details;
 
 import com.kinoz.annotation.SystemLog;
 import com.kinoz.domain.ResponseResult;

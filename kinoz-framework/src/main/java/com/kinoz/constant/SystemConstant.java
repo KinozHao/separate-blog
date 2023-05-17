@@ -12,6 +12,7 @@ public class SystemConstant {
      */
     public static final int ARTICLE_STATUS_DRAFT = 1;
     public static final int ARTICLE_STATUS_NORMAL = 0;
+    public static final int NORMAL = 0;
 
 
     /**

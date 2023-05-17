@@ -1,4 +1,4 @@
-package com.kinoz.controller;
+package com.kinoz.controller.details;
 
 import com.kinoz.domain.ResponseResult;
 import com.kinoz.domain.dto.LinkDto;

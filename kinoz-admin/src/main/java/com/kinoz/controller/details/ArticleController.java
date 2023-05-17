@@ -1,4 +1,4 @@
-package com.kinoz.controller;
+package com.kinoz.controller.details;
 
 import com.kinoz.annotation.SystemLog;
 import com.kinoz.domain.ResponseResult;
@@ -28,7 +28,7 @@ public class ArticleController {
 
     @SystemLog(note = "展示文章")
     @GetMapping("/list")
-    public ResponseResult<PageVo> showTagList(Integer pageNum, Integer pageSize, ArticleDto articleDto){
+    public ResponseResult<PageVo> showArticleList(Integer pageNum, Integer pageSize, ArticleDto articleDto){
         return articleService.showArticleList(pageNum,pageSize,articleDto);
     }
 
